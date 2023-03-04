@@ -15,7 +15,7 @@ export default function LoginPage() {
         fontSize="clamp(1rem, 2rem, 2.25rem)"
         color="primary"
       >
-        Sociopedia
+         FriendshipZone
       </Typography>
       </Box>
       <Box

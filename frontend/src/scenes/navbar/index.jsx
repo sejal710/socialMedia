@@ -40,7 +40,6 @@ export default function Navbar() {
   const alt = theme.palette.background.alt;
 
   const fullName = `${user.firstName} ${user.lastName}`;
-  // const fullName = "Sejal Jaiswal"
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
     <FlexBetween gap="1.75rem">
@@ -56,7 +55,7 @@ export default function Navbar() {
           },
         }}
       >
-        Sociopedia
+        FriendshipZone
       </Typography>
       {isNonMobileScreens && (
           <FlexBetween
@@ -184,7 +183,10 @@ export default function Navbar() {
                 <MenuItem value={fullName}>
                   <Typography>{fullName}</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => dispatch(setLogout())}>
+                <MenuItem onClick={() =>{ 
+                  dispatch(setLogout())
+                   navigate("/")
+                  }}>
                   Log Out
                 </MenuItem>
               </Select>

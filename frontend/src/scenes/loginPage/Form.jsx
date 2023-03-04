@@ -61,16 +61,17 @@ const Form = () => {
     for (let value in values) {
       formData.append(value, values[value]);
     }
-    formData.append("picturePath", values.picture.name);
-// http://localhost:3001
-// https://energetic-eel-beret.cyclic.app
+    // formData.append("picturePath", values.picture.name);
+    console.log(formData)
     const savedUserResponse = await fetch(
-      "https://energetic-eel-beret.cyclic.app/auth/register",
+      "https://social-media-backend-5kpk.onrender.com/auth/register",
       {
         method: "POST",
         body: formData,
       }
-    );
+    ).then((res)=>res.json())
+    .then((res) => console.log(res))
+    .catch((err)=>console.log("err",err));
     const savedUser = await savedUserResponse.json();
     onSubmitProps.resetForm();
 
@@ -80,11 +81,11 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("https://energetic-eel-beret.cyclic.app/auth/login", {
+    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
-    });
+    })
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
     if (loggedIn) {
@@ -100,7 +101,10 @@ const Form = () => {
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);
-    if (isRegister) await register(values, onSubmitProps);
+    if (isRegister) {
+      console.log("value",values)
+      return await register(values, onSubmitProps)
+    };
   };
 
   return (
@@ -274,3 +278,9 @@ const Form = () => {
 };
 
 export default Form;
+
+
+
+// http://localhost:3001
+// https://energetic-eel-beret.cyclic.app
+// https://social-media-backend-5kpk.onrender.com
