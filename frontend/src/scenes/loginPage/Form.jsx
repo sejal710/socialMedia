@@ -12,9 +12,9 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "../../state/index";
+import { setLogin } from "state";
 import Dropzone from "react-dropzone";
-import FlexBetween from "../../components/FlexBetween";
+import FlexBetween from "components/FlexBetween";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -61,17 +61,15 @@ const Form = () => {
     for (let value in values) {
       formData.append(value, values[value]);
     }
-    // formData.append("picturePath", values.picture.name);
-    console.log(formData)
+    formData.append("picturePath", values.picture.name);
+
     const savedUserResponse = await fetch(
-      "https://social-media-backend-5kpk.onrender.com/auth/register",
+      "http://localhost:3001/auth/register",
       {
         method: "POST",
         body: formData,
       }
-    ).then((res)=>res.json())
-    .then((res) => console.log(res))
-    .catch((err)=>console.log("err",err));
+    );
     const savedUser = await savedUserResponse.json();
     onSubmitProps.resetForm();
 
@@ -85,7 +83,7 @@ const Form = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
-    })
+    });
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
     if (loggedIn) {
@@ -101,10 +99,7 @@ const Form = () => {
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);
-    if (isRegister) {
-      console.log("value",values)
-      return await register(values, onSubmitProps)
-    };
+    if (isRegister) await register(values, onSubmitProps);
   };
 
   return (
@@ -274,12 +269,10 @@ const Form = () => {
         </form>
       )}
     </Formik>
-  )
+  );
 };
 
 export default Form;
-
-
 
 // http://localhost:3001
 // https://energetic-eel-beret.cyclic.app
