@@ -12,7 +12,7 @@ userRouter.get('/',async(req,res) => {
     }
 })
 
-userRouter.post('/', async (req, res) => {
+userRouter.post('/register', async (req, res) => {
     const { name, email, password, bio, dob } = req.body;
     try {
       const user = new UserModel({ name, email, password, bio, dob });
